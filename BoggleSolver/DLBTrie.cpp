@@ -97,7 +97,23 @@ DLBTrie::DLBTrie()
 }
 DLBTrie::~DLBTrie()
 {
-	// delete code not implemented
+	recursiveDelete(root);
+}
+
+void DLBTrie::recursiveDelete(DLBNode * node)
+{
+	CharNode * curr = node->head;
+
+	while (curr != NULL) {
+		if (curr->child != NULL)
+		{
+			recursiveDelete(curr->child);
+		}
+		CharNode * temp = curr;
+		curr = curr->next;
+		delete(temp);
+	}
+	delete(node);
 }
 	
 	

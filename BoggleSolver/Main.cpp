@@ -3,6 +3,8 @@
 const int MAX_COLUMNS = 4;
 const int MAX_ROWS = 4;
 
+std::list<std::string> wordList;
+
 int main() {
 	DLBTrie * scrabbleDlb = new DLBTrie();
 	populateScrabbleDlb(scrabbleDlb);
@@ -28,6 +30,13 @@ int main() {
 	}
 
 	boggleSolve<MAX_COLUMNS, MAX_ROWS>(boggleBoard, hasChecked, string, scrabbleDlb, 0, 0, 0);
+
+	for (auto it = wordList.cbegin(); it != wordList.cend(); it++)
+	{
+		std::cout << *it << std::endl;
+	}
+
+	delete(scrabbleDlb);
 }
 
 template <size_t columns, size_t rows>
@@ -55,7 +64,7 @@ void boggleSolve(char (&boggleBoard)[columns][rows], bool (&hasChecked)[columns]
 	// Dump the word if it's an acceptable word
 	if (dlb->wordExists(str))
 	{
-		std::cout << str << std::endl;
+		addToList(str);
 	}
 
 	// Check if we can go to the left
@@ -149,5 +158,23 @@ void populateScrabbleDlb(DLBTrie * dlb)
 		}
 		dlb->addWord(line);
 	}
+}
+
+template<size_t wordSize>
+void addToList(char (&word)[wordSize])
+{
+	std::string str(word);
+	
+	bool found = false;
+	for (auto it = wordList.cbegin(); it != wordList.cend(); it++)
+	{
+		if (!str.compare(*it))
+		{
+			// We've found our word in the list.
+			// Return from this method.
+			return;
+		}
+	}
+	wordList.push_back(str);
 }
 

@@ -118,4 +118,5 @@ public:
 
 private:
 	class DLBNode * root;
+	void recursiveDelete(DLBNode * node);
 };
