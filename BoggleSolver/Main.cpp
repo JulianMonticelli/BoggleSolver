@@ -3,7 +3,7 @@
 const int MAX_COLUMNS = 4;
 const int MAX_ROWS = 4;
 
-std::list<std::string> wordList;
+std::set<std::string> wordSet;
 
 int main() {
 	DLBTrie * scrabbleDlb = new DLBTrie();
@@ -31,7 +31,7 @@ int main() {
 
 	boggleSolve<MAX_COLUMNS, MAX_ROWS>(boggleBoard, hasChecked, string, scrabbleDlb, 0, 0, 0);
 
-	for (auto it = wordList.cbegin(); it != wordList.cend(); it++)
+	for (auto it = wordSet.cbegin(); it != wordSet.cend(); it++)
 	{
 		std::cout << *it << std::endl;
 	}
@@ -64,7 +64,7 @@ void boggleSolve(char (&boggleBoard)[columns][rows], bool (&hasChecked)[columns]
 	// Dump the word if it's an acceptable word
 	if (dlb->wordExists(str))
 	{
-		addToList(str);
+		addToSet(str);
 	}
 
 	// Check if we can go to the left
@@ -161,20 +161,9 @@ void populateScrabbleDlb(DLBTrie * dlb)
 }
 
 template<size_t wordSize>
-void addToList(char (&word)[wordSize])
+void addToSet(char (&word)[wordSize])
 {
 	std::string str(word);
-	
-	bool found = false;
-	for (auto it = wordList.cbegin(); it != wordList.cend(); it++)
-	{
-		if (!str.compare(*it))
-		{
-			// We've found our word in the list.
-			// Return from this method.
-			return;
-		}
-	}
-	wordList.push_back(str);
+	wordSet.insert(str);
 }
 

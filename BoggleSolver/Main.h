@@ -1,7 +1,7 @@
 #pragma once
 #include "DLBTrie.h"
 #include <iostream>
-#include <list>
+#include <set>
 #include <fstream>
 #include <sstream>
 
@@ -11,4 +11,4 @@ void boggleSolve(char(&boggleBoard)[columns][rows], bool(&hasChecked)[columns][r
 void populateScrabbleDlb(DLBTrie * dlb);
 
 template<size_t wordSize>
-void addToList(char (&word)[wordSize]);
+void addToSet(char (&word)[wordSize]);
